@@ -28,3 +28,12 @@ def categories():
         insertObject.append(dict(zip(columnames, record)))
     cursor.close
     return render_template('categories.html', data= insertObject)
+
+@app.route('/deleteCategories/<string:id>')
+def deleteCategories(id):
+    cursor = db.connection.cursor()
+    sql = "DELETE FROM categories WHERE idcategories=%s"
+    data = (id,)
+    cursor.execute(sql, data)
+    db.connection.commit()
+    return redirect(url_for('categories'))
