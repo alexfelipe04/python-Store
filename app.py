@@ -29,6 +29,21 @@ def categories():
     cursor.close
     return render_template('categories.html', data= insertObject)
 
+@app.route('/addcategories', methods=['POST'])
+def addCategories():
+     name = request.form['name']
+     description = request.form['description']
+     createdat = request.form['createdat']
+     createdby = request.form['createdby']
+
+     if name and description and createdat and  createdby :
+        cursor = db.connection.cursor()
+        sql = "INSERT INTO categories (name, description, created_at, created_by) VALUES (%s, %s, %s, %s)"
+        data = (name,  description, createdat, createdby)
+        cursor.execute(sql, data)
+        db.connection.commit()
+     return redirect(url_for('categories'))
+
 @app.route('/deleteCategories/<string:id>')
 def deleteCategories(id):
     cursor = db.connection.cursor()
@@ -37,3 +52,4 @@ def deleteCategories(id):
     cursor.execute(sql, data)
     db.connection.commit()
     return redirect(url_for('categories'))
+
