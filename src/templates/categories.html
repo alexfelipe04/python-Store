@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1>
+        <h1 class="text-center mt-5 mb-5 text-primary">Category management</h1>
+    </h1>
+    <a href="/" class="btn btn-primary">Go home</a>
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="/addcategories" method="POST">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Name</label>
+                            <input type="text" class="form-control mb-3" name="name">
+                        </div>
+                        <div class="col">
+                            <label>Description</label>
+                            <input type="text" class="form-control mb-3" name="description">
+                        </div>
+                        <div class="col">
+                            <label>Created at</label>
+                            <input type="text" class="form-control mb-3" name="createdat">
+                        </div>
+                        <div class="col">
+                            <label>Created by</label>
+                            <input type="text" class="form-control mb-3" name="createdby">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary mb-3 mt-4" type="submit">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Created by</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                
+                <tbody>
+                    {% for d in data %}
+                        <tr>
+                            <td>{{d.idcategories}}</td>
+                            <td>{{d.name}}</td>
+                            <td>{{d.description}}</td>
+                            <td>{{d.created_at}}</td>
+                            <td>{{d.created_by}}</td>
+                            <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.idcategories}}" data-bs-toggle="modal" data-bs-target="#modal{{d.idcategories}}">Edit</button></td>
+                            <td><a href="{{url_for('deleteCategories', id=d.idcategories)}}" class="btn btn-danger btn-sm">Delete</a></td>
+                           
+                        </tr>
+
+                        <!-- modal -->
+
+                        <div class="modal fade" id="modal{{d.idcategories}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.name}}</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/editCategories/{{d.idcategories}}" method="post">
+                                        <label>name</label>
+                                        <input type="text" class="form-control mb-3" name="name" value="{{d.name}}">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control mb-3" name="description" value="{{d.description}}">
+                                        <label>Created at</label>
+                                        <input type="text" class="form-control mb-3" name="createdat" value="{{d.created_at}}">
+                                        <label>Created by</label>
+                                        <input type="text" class="form-control mb-3" name="createdby" value="{{d.created_by}}">
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            </div>
+        </div>
+    </div>
+    
+
+
+                
+
+</body>
+</html>
