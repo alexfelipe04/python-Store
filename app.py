@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request, redirect, url_for
 import os 
+import database as db
 
 #accedemos a nustro repositorio con el siguiente codigo
 templete_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
