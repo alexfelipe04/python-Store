@@ -14,3 +14,16 @@ app = Flask(__name__, template_folder=templete_dir)
 @app.route('/')
 def home():
     return render_template('index.html')
+@app.route('/categories')
+def categories():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM categories")
+    myresult = cursor.fetchall()
+    #convertir  los datos a diccionario
+    insertObject = []
+    columnames =[column[0] for column in cursor.description]
+    for record in myresult:
+    #usamos la funcion append para ir metiendo los datos en formato diccionario
+        insertObject.append(dict(zip(columnames, record)))
+    cursor.close
+    return render_template('categories.html', data= insertObject)
