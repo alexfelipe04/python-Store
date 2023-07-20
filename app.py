@@ -53,3 +53,19 @@ def deleteCategories(id):
     db.connection.commit()
     return redirect(url_for('categories'))
 
+
+@app.route('/editCategories/<string:id>', methods=['POST'])
+def editCategories(id):
+    name = request.form['name']
+    description = request.form['description']
+    createdat = request.form['createdat']
+    createdby = request.form['createdby']
+
+    
+    if name and description and createdat and  createdby :
+        cursor = db.connection.cursor()
+        sql = "UPDATE  categories SET name = %s, description = %s, created_at = %s, created_by = %s WHERE idcategories = %s"
+        data = (name,  description, createdat, createdby, id)
+        cursor.execute(sql, data)
+        db.connection.commit()
+    return redirect(url_for('categories'))
