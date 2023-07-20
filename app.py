@@ -15,6 +15,7 @@ app = Flask(__name__, template_folder=templete_dir)
 @app.route('/')
 def home():
     return render_template('index.html')
+
 @app.route('/categories')
 def categories():
     cursor = db.connection.cursor()
@@ -69,3 +70,7 @@ def editCategories(id):
         cursor.execute(sql, data)
         db.connection.commit()
     return redirect(url_for('categories'))
+
+
+if __name__=='__main__':
+    app.run(debug=True, port=4000)

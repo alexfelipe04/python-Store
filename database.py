@@ -21,7 +21,3 @@ try:
         print("Conectado a la base de datos: {}".format(row))
 except Error as ex:
     print("Error durante la conexión: {}".format(ex))
-finally:
-    if connection.is_connected():
-        connection.close()  # Se cerró la conexión a la BD.
-        print("La conexión ha finalizado.")
